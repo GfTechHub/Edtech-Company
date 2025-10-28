@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SkillSprint</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6051ED;
+            --primary-h: #7B68EE;
+            --dark-bg: #2C3544;
+            --darker-bg: #1F2937;
+            --sidebar-bg: #252D3A;
+            --text-grey: #9CA3AF;
+            --text-light: #E5E7EB;
+            --border-dark: #374151;
+            --card-bg: #F3F4F6;
+        }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--dark-bg);
+        color: white;
+        overflow-x: hidden;
+    }
+
+    .dashboard-container {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 280px;
+        background: var(--darker-bg);
+        padding: 2rem 1.5rem;
+        position: fixed;
+        height: 100vh;
+        left: 0;
+        top: 0;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.mobile-hidden {
+        transform: translateX(-100%);
+    }
+
+    .logo {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        color: white;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-item {
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--text-light);
+        text-decoration: none;
+        transition: all 0.3s;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .nav-item i {
+        font-size: 1.25rem;
+        width: 24px;
+    }
+
+    .nav-item.active {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 4px 12px rgba(96, 81, 237, 0.3);
+    }
+
+    .nav-item:not(.active):hover {
+        background: rgba(96, 81, 237, 0.1);
+        color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+        flex: 1;
+        margin-left: 280px;
+        padding: 2rem;
+        transition: margin-left 0.3s ease;
+    }
+
+    .main-content.full-width {
+        margin-left: 0;
+    }
+
+    /* Top Bar */
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .mobile-menu-btn {
+        display: none;
+        background: var(--darker-bg);
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .search-bar {
+        flex: 1;
+        max-width: 500px;
+        position: relative;
+    }
+
+    .search-bar input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 3rem;
+        border: none;
+        border-radius: 50px;
+        background: white;
+        font-size: 1rem;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .search-bar input:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(96, 81, 237, 0.2);
+    }
+
+    .search-bar i {
+        position: absolute;
+        left: 1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6B7280;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .user-profile:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+    }
+
+    .user-name {
+        color: #1F2937;
+        font-weight: 600;
+    }
+
+    /* Content Section */
+    .content-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: white;
+    }
+
+    .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .course-card {
+        background: var(--card-bg);
+        border-radius: 16px;
+        padding: 1.5rem;
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .course-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .course-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 12px;
+        background: var(--darker-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .course-icon i {
+        font-size: 2rem;
+        color: var(--primary);
+    }
+
+    .course-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .course-info {
+        flex: 1;
+    }
+
+    .course-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #1F2937;
+        margin-bottom: 0.25rem;
+    }
+
+    .course-instructor {
+        font-size: 0.875rem;
+        color: #6B7280;
+        margin-bottom: 0.75rem;
+    }
+
+    .progress-bar-wrapper {
+        margin-top: 0.75rem;
+    }
+
+    .progress-bar-custom {
+        height: 8px;
+        background: #E5E7EB;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background: var(--primary);
+        border-radius: 4px;
+        transition: width 0.3s;
+    }
+
+    .progress-text {
+        font-size: 0.875rem;
+        color: #6B7280;
+        text-align: right;
+    }
+
+    /* Stats Card */
+    .stats-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 2rem;
+    }
+
+    .stats-card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1F2937;
+        margin-bottom: 2rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-circle {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 1rem;
+        position: relative;
+    }
+
+    .stat-circle svg {
+        transform: rotate(-90deg);
+    }
+
+    .stat-circle-bg {
+        fill: none;
+        stroke: #E5E7EB;
+        stroke-width: 10;
+    }
+
+    .stat-circle-progress {
+        fill: none;
+        stroke: var(--primary);
+        stroke-width: 10;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 1s ease;
+    }
+
+    .stat-value {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    .stat-label {
+        color: #6B7280;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+
+    /* Mobile Overlay */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+        .sidebar {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.mobile-visible {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+        }
+
+        .mobile-menu-btn {
+            display: block;
+        }
+
+        .search-bar {
+            max-width: 100%;
+            order: 3;
+            flex-basis: 100%;
+        }
+
+        .courses-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-circle {
+            width: 100px;
+            height: 100px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .main-content {
+            padding: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+        }
+
+        .course-card {
+            padding: 1.25rem;
+        }
+
+        .course-icon {
+            width: 60px;
+            height: 60px;
+        }
+    }
+</style>
+
+
+</head>
+<body>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="logo">SkillSprint</div>
+    <nav class="nav-menu">
+        <a href="#" class="nav-item active">
+            <i class="fas fa-th-large"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-book-open"></i>
+            <span>My Courses</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+    </nav>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search courses...">
+        </div>
+
+        <div class="user-profile">
+            <div class="user-avatar">JD</div>
+            <span class="user-name">John Doe</span>
+        </div>
+    </div>
+
+    <!-- Enrolled Courses Section -->
+    <section class="content-section">
+        <h2 class="section-title">My Enrolled Courses</h2>
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="course-info">
+                    <h3 class="course-title">Full-Stack Web Development</h3>
+                    <p class="course-instructor">Instructor: Mr. Dastin</p>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-custom">
+                            <div class="progress-bar-fill" style="width: 75%"></div>
+                        </div>
+                        <p class="progress-text">75% Completed</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="course-info">
+                    <h3 class="course-title">UI/UX Design Masterclass</h3>
+                    <p class="course-instructor">Instructor: Ms. Disulut</p>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-custom">
+                            <div class="progress-bar-fill" style="width: 40%"></div>
+                        </div>
+                        <p class="progress-text">40% Completed</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="course-info">
+                    <h3 class="course-title">Introduction to AI/ML</h3>
+                    <p class="course-instructor">Instructor: Mr. Dirawn</p>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-custom">
+                            <div class="progress-bar-fill" style="width: 10%"></div>
+                        </div>
+                        <p class="progress-text">10% Completed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats Section -->
+    <section class="content-section">
+        <div class="stats-card">
+            <h3 class="stats-card-title">Quick Stats</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-circle">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle class="stat-circle-bg" cx="60" cy="60" r="50"></circle>
+                            <circle class="stat-circle-progress" cx="60" cy="60" r="50" 
+                                stroke-dasharray="314" 
+                                stroke-dashoffset="250" 
+                                id="completedCircle"></circle>
+                        </svg>
+                        <div class="stat-value">12</div>
+                    </div>
+                    <p class="stat-label">Completed</p>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-circle">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle class="stat-circle-bg" cx="60" cy="60" r="50"></circle>
+                            <circle class="stat-circle-progress" cx="60" cy="60" r="50" 
+                                stroke-dasharray="314" 
+                                stroke-dashoffset="171" 
+                                id="hoursCircle"></circle>
+                        </svg>
+                        <div class="stat-value">45</div>
+                    </div>
+                    <p class="stat-label">Hours Spent</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        
+        sidebar.classList.toggle('mobile-visible');
+        overlay.classList.toggle('active');
+    }
+
+    // Close sidebar when clicking on nav items on mobile
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            if (window.innerWidth <= 968) {
+                toggleSidebar();
+            }
+        });
+    });
+
+    // Animate progress circles on load
+    window.addEventListener('load', function() {
+        // Completed: 12/100 courses = 12%
+        const completedPercent = 12;
+        const completedDashoffset = 314 - (314 * completedPercent / 100);
+        
+        // Hours: 45/100 hours = 45%
+        const hoursPercent = 45;
+        const hoursDashoffset = 314 - (314 * hoursPercent / 100);
+        
+        setTimeout(() => {
+            document.getElementById('completedCircle').style.strokeDashoffset = completedDashoffset;
+            document.getElementById('hoursCircle').style.strokeDashoffset = hoursDashoffset;
+        }, 500);
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 968) {
+            document.getElementById('sidebar').classList.remove('mobile-visible');
+            document.getElementById('sidebarOverlay').classList.remove('active');
+        }
+    });
+</script>
+
+
+</body>
+</html>
