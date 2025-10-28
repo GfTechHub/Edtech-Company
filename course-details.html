@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details - SkillSprint</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6051ED;
+            --primary-h: #7B68EE;
+            --dark-navy: #2C3544;
+            --darker-navy: #1F2937;
+            --text-grey: #6B7280;
+            --bg-light: #F9FAFB;
+            --border-light: #E5E7EB;
+        }
+
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg-light);
+        color: #1F2937;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #1E88E5 0%, #9D8FE8 100%);
+        padding: 3rem 2rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        top: -150px;
+        right: -100px;
+    }
+
+    .back-btn {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-bottom: 2rem;
+    }
+
+    .back-btn:hover {
+        background: rgba(255,255,255,0.3);
+    }
+
+    .hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .brand-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .course-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .course-meta {
+        display: flex;
+        gap: 2rem;
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+
+    .enroll-btn-hero {
+        background: rgba(255,255,255,0.25);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 0.875rem 2rem;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 2rem;
+    }
+
+    .enroll-btn-hero:hover {
+        background: white;
+        color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Main Content */
+    .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+    }
+
+    /* Cards */
+    .content-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        margin-bottom: 2rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: #1F2937;
+    }
+
+    .card-text {
+        color: var(--text-grey);
+        line-height: 1.7;
+        font-size: 0.95rem;
+    }
+
+    /* Course Outline */
+    .curriculum-section {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        margin-bottom: 2rem;
+    }
+
+    .curriculum-item {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .curriculum-item:last-child {
+        border-bottom: none;
+    }
+
+    .curriculum-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .curriculum-bullet {
+        width: 8px;
+        height: 8px;
+        background: var(--primary);
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .curriculum-title {
+        flex: 1;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .curriculum-icon {
+        color: var(--text-grey);
+        transition: transform 0.3s;
+    }
+
+    .curriculum-content {
+        padding-left: 1.5rem;
+        margin-top: 0.75rem;
+        display: none;
+    }
+
+    .curriculum-content.active {
+        display: block;
+    }
+
+    .curriculum-content ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .curriculum-content li {
+        padding: 0.5rem 0;
+        color: var(--text-grey);
+        font-size: 0.95rem;
+    }
+
+    .curriculum-content li:before {
+        content: "•";
+        color: var(--primary);
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: 0.5rem;
+    }
+
+    /* Video Preview */
+    .video-preview {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        background: var(--darker-navy);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+
+    .video-preview img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70px;
+        height: 70px;
+        background: rgba(96, 81, 237, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 3px solid rgba(255,255,255,0.8);
+    }
+
+    .play-button:hover {
+        transform: translate(-50%, -50%) scale(1.1);
+        background: var(--primary);
+    }
+
+    .play-button i {
+        color: white;
+        font-size: 1.5rem;
+        margin-left: 4px;
+    }
+
+    .video-label {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #1F2937;
+        margin-bottom: 1rem;
+    }
+
+    /* Sidebar */
+    .sidebar-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        position: sticky;
+        top: 2rem;
+    }
+
+    .price-section {
+        text-align: center;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-light);
+        margin-bottom: 1.5rem;
+    }
+
+    .price {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1F2937;
+        margin-bottom: 0.75rem;
+    }
+
+    .rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .stars {
+        color: #FCD34D;
+        font-size: 1.25rem;
+    }
+
+    .rating-text {
+        color: var(--text-grey);
+        font-weight: 500;
+    }
+
+    /* Related Courses */
+    .related-section {
+        margin-top: 2rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1F2937;
+    }
+
+    .related-course {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 12px;
+        margin-bottom: 0.75rem;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .related-course:hover {
+        background: var(--bg-light);
+    }
+
+    .related-thumbnail {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        background: var(--darker-navy);
+        flex-shrink: 0;
+        overflow: hidden;
+    }
+
+    .related-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .related-info {
+        flex: 1;
+    }
+
+    .related-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #1F2937;
+        margin-bottom: 0.25rem;
+    }
+
+    .related-instructor {
+        font-size: 0.85rem;
+        color: var(--text-grey);
+    }
+
+    .related-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .related-icon i {
+        color: white;
+        font-size: 1.25rem;
+    }
+
+    .enroll-btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 1rem;
+    }
+
+    .enroll-btn:hover {
+        background: var(--primary-h);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(96, 81, 237, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .sidebar-card {
+            position: static;
+        }
+
+        .course-title {
+            font-size: 2rem;
+        }
+
+        .course-meta {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .main-content {
+            padding: 1rem;
+        }
+
+        .hero-section {
+            padding: 2rem 1rem;
+        }
+
+        .course-title {
+            font-size: 1.75rem;
+        }
+
+        .content-card,
+        .curriculum-section,
+        .sidebar-card {
+            padding: 1.5rem;
+        }
+
+        .price {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <button class="back-btn" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="brand-name">SkillSprint</div>
+            <h1 class="course-title">Full-Stack Web Development</h1>
+            <div class="course-meta">
+                <span><i class="fas fa-user"></i> John Doe</span>
+                <span><i class="far fa-clock"></i> 8 Weeks</span>
+            </div>
+            <button class="enroll-btn-hero d-md-none">Enroll Now</button>
+        </div>
+    </section>
+
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="content-grid">
+        <!-- Left Column -->
+        <div>
+            <!-- Course Overview -->
+            <div class="content-card">
+                <h2 class="card-title">Course Overview</h2>
+                <p class="card-text">
+                    Lorem ipsum dolor sit et tellus ac eownmoseste how about it allows the lorem cit meitas 
+                    sembre sit that if lineass that clone nuem nemet colin bis vitiate. This comprehensive course 
+                    covers everything you need to become a full-stack web developer, from HTML and CSS basics 
+                    to advanced JavaScript frameworks and backend development.
+                </p>
+            </div>
+
+            <!-- Curriculum Outline -->
+            <div class="curriculum-section">
+                <h2 class="card-title">Curriculum Outline</h2>
+                
+                <div class="curriculum-item">
+                    <div class="curriculum-header" onclick="toggleCurriculum(this)">
+                        <span class="curriculum-bullet"></span>
+                        <span class="curriculum-title">Introduction</span>
+                        <i class="fas fa-chevron-down curriculum-icon"></i>
+                    </div>
+                    <div class="curriculum-content">
+                        <ul>
+                            <li>Welcome to the Course</li>
+                            <li>Course Structure Overview</li>
+                            <li>Setting Up Your Environment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="curriculum-item">
+                    <div class="curriculum-header" onclick="toggleCurriculum(this)">
+                        <span class="curriculum-bullet"></span>
+                        <span class="curriculum-title">Frontend Bootcamp</span>
+                        <i class="fas fa-chevron-down curriculum-icon"></i>
+                    </div>
+                    <div class="curriculum-content">
+                        <ul>
+                            <li>HTML/CSS Fundamentals</li>
+                            <li>Responsive Design Principles</li>
+                            <li>CSS Frameworks (Bootstrap, Tailwind)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="curriculum-item">
+                    <div class="curriculum-header" onclick="toggleCurriculum(this)">
+                        <span class="curriculum-bullet"></span>
+                        <span class="curriculum-title">General surgicals classic textbook skill I consider</span>
+                        <i class="fas fa-chevron-down curriculum-icon"></i>
+                    </div>
+                    <div class="curriculum-content">
+                        <ul>
+                            <li>JavaScript Basics</li>
+                            <li>DOM Manipulation</li>
+                            <li>ES6+ Features</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="curriculum-item">
+                    <div class="curriculum-header" onclick="toggleCurriculum(this)">
+                        <span class="curriculum-bullet"></span>
+                        <span class="curriculum-title">Merah teksture Textstatsid of Lessontes</span>
+                        <i class="fas fa-chevron-down curriculum-icon"></i>
+                    </div>
+                    <div class="curriculum-content">
+                        <ul>
+                            <li>React Fundamentals</li>
+                            <li>Component Architecture</li>
+                            <li>State Management</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="curriculum-item">
+                    <div class="curriculum-header" onclick="toggleCurriculum(this)">
+                        <span class="curriculum-bullet"></span>
+                        <span class="curriculum-title">Macna instructure settings li roseete Ad License</span>
+                        <i class="fas fa-chevron-down curriculum-icon"></i>
+                    </div>
+                    <div class="curriculum-content">
+                        <ul>
+                            <li>Node.js Introduction</li>
+                            <li>Express.js Framework</li>
+                            <li>RESTful API Design</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="curriculum-item">
+                    <div class="curriculum-header" onclick="toggleCurriculum(this)">
+                        <span class="curriculum-bullet"></span>
+                        <span class="curriculum-title">Connect all forint text macoset</span>
+                        <i class="fas fa-chevron-down curriculum-icon"></i>
+                    </div>
+                    <div class="curriculum-content">
+                        <ul>
+                            <li>MongoDB Basics</li>
+                            <li>Database Design</li>
+                            <li>Integration with Backend</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Video Section -->
+            <div class="content-card">
+                <h3 class="video-label">Course Outline</h3>
+                <div class="video-preview">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=450&fit=crop" alt="Course Preview">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <h3 class="video-label">Preview Video</h3>
+                <div class="video-preview">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=450&fit=crop" alt="Preview Video">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div>
+            <div class="sidebar-card">
+                <!-- Price & Rating -->
+                <div class="price-section">
+                    <div class="price">$99.99</div>
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-text">4.3/5.0</span>
+                    </div>
+                </div>
+
+                <!-- Related Courses -->
+                <div class="related-section">
+                    <h3 class="section-subtitle">Related Courses</h3>
+                    
+                    <div class="related-course">
+                        <div class="related-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=200&h=200&fit=crop" alt="UI/UX Design">
+                        </div>
+                        <div class="related-info">
+                            <div class="related-title">UI/UX Design Masterclass</div>
+                            <div class="related-instructor">Instructor: Jane Smith</div>
+                        </div>
+                        <div class="related-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                    </div>
+
+                    <div class="related-course">
+                        <div class="related-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=200&h=200&fit=crop" alt="Introduction">
+                        </div>
+                        <div class="related-info">
+                            <div class="related-title">Introduction to React.js for!</div>
+                            <div class="related-instructor">Instructor: Bob Johnson</div>
+                        </div>
+                        <div class="related-icon">
+                            <i class="fab fa-react"></i>
+                        </div>
+                    </div>
+
+                    <div class="related-course">
+                        <div class="related-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=200&h=200&fit=crop" alt="AI/ML">
+                        </div>
+                        <div class="related-info">
+                            <div class="related-title">Introduction to AI/ML</div>
+                            <div class="related-instructor">Instructor: Sarah Lee</div>
+                        </div>
+                        <div class="related-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="enroll-btn" onclick="handleEnroll()">Enroll Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function toggleCurriculum(element) {
+        const content = element.nextElementSibling;
+        const icon = element.querySelector('.curriculum-icon');
+        
+        // Close all other open items
+        document.querySelectorAll('.curriculum-content').forEach(item => {
+            if (item !== content) {
+                item.classList.remove('active');
+                item.previousElementSibling.querySelector('.curriculum-icon').style.transform = 'rotate(0deg)';
+            }
+        });
+        
+        // Toggle current item
+        content.classList.toggle('active');
+        
+        if (content.classList.contains('active')) {
+            icon.style.transform = 'rotate(180deg)';
+        } else {
+            icon.style.transform = 'rotate(0deg)';
+        }
+    }
+
+    function handleEnroll() {
+        alert('Enrollment functionality would be implemented here');
+        // Add your enrollment logic
+        // Example: redirect to checkout or show enrollment modal
+    }
+
+    // Video play button functionality
+    document.querySelectorAll('.play-button').forEach(button => {
+        button.addEventListener('click', function() {
+            alert('Video player would open here');
+            // Add your video player logic
+        });
+    });
+</script>
+
+
+</body>
+</html>
