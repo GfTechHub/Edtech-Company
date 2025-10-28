@@ -1,133 +1,708 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SkillSprint — Master modern tech skills at your own pace</title>
-  <meta name="description" content="SkillSprint — project-based tech courses to help you learn and build real-world skills.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSprint - Unlock Your Tech Future</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Design System Colors */
+        :root {
+            --primary: #6051ED;
+            --primary-h: #7B68EE;
+            --secondary: #1E88E5;
+            --wwhite7: #FFFFFF;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --purple-dark: #5B4B9A;
+            --purple-light: #9D8FE8;
+            --mask-grey: #6B7280;
+            --text-grey: #6B7280;
+            --bg-light: #F9FAFB;
+            --border-light: #E5E7EB;
+        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg-light);
+        color: #1F2937;
+    }
 
-  <!-- Bootstrap 5 CSS (CDN) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    /* Navbar */
+    .navbar {
+        background: #2C3E50;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
-  <!-- Tailwind CDN (for a few utility helpers) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white !important;
+        font-family: 'Inter', sans-serif;
+    }
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="assets/css/style.css">
+    .navbar-brand span:first-child {
+        color: var(--primary);
+    }
+
+    .nav-link {
+        color: #D1D5DB !important;
+        margin: 0 0.75rem;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+        color: white !important;
+    }
+
+    .btn-login {
+        border: 1.5px solid rgba(255,255,255,0.8);
+        color: white;
+        padding: 0.5rem 1.75rem;
+        border-radius: 8px;
+        background: transparent;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+    }
+
+    .btn-login:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: white;
+    }
+
+    .btn-signup {
+        background: var(--primary);
+        color: white;
+        padding: 0.5rem 1.75rem;
+        border-radius: 8px;
+        border: none;
+        margin-left: 0.75rem;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+    }
+
+    .btn-signup:hover {
+        background: var(--primary-h);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(96, 81, 237, 0.4);
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #6051ED 0%, #9D8FE8 100%);
+        padding: 5rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        top: -150px;
+        left: -100px;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        bottom: -200px;
+        right: -150px;
+        animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-section h1 {
+        color: white;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 2.5rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .btn-hero {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.3);
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .btn-hero:hover {
+        background: white;
+        color: var(--primary);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    /* Course Categories */
+    .categories-section {
+        padding: 4rem 2rem;
+        background: white;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 2.5rem;
+        letter-spacing: -0.02em;
+    }
+
+    .category-card {
+        background: white;
+        border: 2px solid #E5E7EB;
+        border-radius: 16px;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        height: 100%;
+    }
+
+    .category-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary);
+        box-shadow: 0 12px 32px rgba(96, 81, 237, 0.15);
+    }
+
+    .category-icon {
+        font-size: 2.75rem;
+        color: var(--primary);
+        margin-bottom: 1.25rem;
+        transition: all 0.3s;
+    }
+
+    .category-card:hover .category-icon {
+        transform: scale(1.1);
+    }
+
+    .category-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 0.5rem;
+    }
+
+    .category-subtitle {
+        font-size: 0.875rem;
+        color: var(--text-grey);
+        font-weight: 500;
+    }
+
+    /* Testimonials */
+    .testimonials-section {
+        padding: 4rem 2rem;
+        background: var(--bg-light);
+    }
+
+    .testimonial-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem 2rem;
+        text-align: center;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        height: 100%;
+        transition: all 0.3s;
+        border: 1px solid var(--border-light);
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+
+    .testimonial-img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        margin: 0 auto 1.25rem;
+        border: 3px solid var(--primary);
+        object-fit: cover;
+    }
+
+    .testimonial-name {
+        font-weight: 700;
+        color: #111827;
+        font-size: 1.125rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .testimonial-title {
+        color: var(--text-grey);
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+
+    .testimonial-text {
+        color: var(--text-grey);
+        font-style: italic;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    /* Footer */
+    .footer {
+        background: #2C3E50;
+        color: white;
+        padding: 3.5rem 2rem 1.5rem;
+    }
+
+    .footer-brand {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .footer-brand span:first-child {
+        color: var(--primary);
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+        color: #D1D5DB;
+        text-decoration: none;
+        transition: color 0.2s;
+        font-weight: 400;
+        font-size: 0.95rem;
+    }
+
+    .footer-links a:hover {
+        color: white;
+    }
+
+    .footer-heading {
+        font-weight: 600;
+        margin-bottom: 1.25rem;
+        font-size: 1.05rem;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 0.875rem;
+        flex-wrap: wrap;
+    }
+
+    .social-icon {
+        width: 42px;
+        height: 42px;
+        background: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s;
+        font-size: 1rem;
+    }
+
+    .social-icon:hover {
+        background: var(--primary-h);
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(96, 81, 237, 0.4);
+    }
+
+    .copyright {
+        text-align: center;
+        margin-top: 2.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        color: #9CA3AF;
+        font-size: 0.9rem;
+    }
+
+    /* Mobile Menu */
+    .navbar-toggler {
+        border: none;
+        padding: 0.5rem;
+    }
+
+    .navbar-toggler-icon {
+        background-image: none;
+        width: 24px;
+        height: 2px;
+        background: white;
+        display: block;
+        position: relative;
+    }
+
+    .navbar-toggler-icon::before,
+    .navbar-toggler-icon::after {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 2px;
+        background: white;
+        left: 0;
+    }
+
+    .navbar-toggler-icon::before {
+        top: -8px;
+    }
+
+    .navbar-toggler-icon::after {
+        bottom: -8px;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    /* Carousel dots */
+    .carousel-indicators {
+        margin-top: 1.5rem;
+        position: relative;
+        bottom: auto;
+    }
+
+    .carousel-indicators [data-bs-target] {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #D1D5DB;
+        border: none;
+        opacity: 1;
+        transition: all 0.3s;
+    }
+
+    .carousel-indicators .active {
+        background-color: var(--primary);
+        width: 12px;
+        height: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-section h1 {
+            font-size: 2.25rem;
+        }
+
+        .navbar {
+            padding: 1rem;
+        }
+
+        .nav-link {
+            margin: 0.5rem 0;
+        }
+
+        .btn-login, .btn-signup {
+            margin: 0.5rem 0;
+            display: block;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+        }
+
+        .categories-section,
+        .testimonials-section {
+            padding: 3rem 1.5rem;
+        }
+
+        .social-icons {
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-section {
+            padding: 4rem 1.5rem;
+        }
+
+        .hero-section h1 {
+            font-size: 1.875rem;
+        }
+
+        .btn-hero {
+            padding: 0.875rem 2rem;
+            font-size: 1rem;
+        }
+    }
+</style>
 </head>
-<body class="bg-dark-charcoal text-light">
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><span>Skill</span>Sprint</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">Course Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-login">Log In</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-signup">Sign Up</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Unlock Your<br>Tech Future</h1>
+        <button class="btn btn-hero">Start Learning Now</button>
+    </div>
+</section>
 
-  <!-- NAV -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-transparent py-3">
+<!-- Course Categories -->
+<section class="categories-section" id="categories">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-        <span class="brand-badge">⚡</span>
-        <span class="fs-5 fw-bold">SkillSprint</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          <li class="nav-item"><a class="btn btn-outline-info ms-2" href="#join">Join Now</a></li>
-        </ul>
-      </div>
+        <h2 class="section-title">Course Category</h2>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="category-title">Design</h3>
+                    <p class="category-subtitle">Sorry Post</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="category-title">Programming</h3>
+                    <p class="category-subtitle">For Count</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="category-title">AI</h3>
+                    <p class="category-subtitle">Elite Product</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="category-title">Marketing</h3>
+                    <p class="category-subtitle">Tioner Mentis</p>
+                </div>
+            </div>
+        </div>
     </div>
-  </nav>
+</section>
 
-  <!-- HERO -->
-  <header class="py-5">
+<!-- Testimonials -->
+<section class="testimonials-section">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 text-left">
-          <h1 class="display-5 fw-bold mb-3" style="font-family: 'Poppins', sans-serif;">
-            Empowering learners to build real-world tech skills.
-          </h1>
-          <p class="lead mb-4" style="font-family: 'Inter', sans-serif;">
-            Master modern tech skills at your own pace. Project-based courses, hands-on labs, and real portfolio projects.
-          </p>
-          <div class="d-flex gap-2">
-            <a href="#courses" class="btn btn-primary btn-lg">Browse Courses</a>
-            <a href="#join" class="btn btn-outline-light btn-lg">Join Now</a>
-          </div>
+        <h2 class="section-title">Testimonial</h2>
+        
+        <!-- Desktop View -->
+        <div class="row g-4 d-none d-md-flex">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <img src="https://ui-avatars.com/api/?name=Cent+Ikeune&background=6051ED&color=fff&size=90&font-size=0.35" alt="Cent Ikeune" class="testimonial-img">
+                    <h4 class="testimonial-name">Cent Ikeune</h4>
+                    <p class="testimonial-title">Trainee at Instructive</p>
+                    <p class="testimonial-text">"Great learning experience with amazing instructors!"</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <img src="https://ui-avatars.com/api/?name=Ali+Omly&background=6051ED&color=fff&size=90&font-size=0.35" alt="Ali Omly" class="testimonial-img">
+                    <h4 class="testimonial-name">Ali Omly</h4>
+                    <p class="testimonial-title">Trainee at Business Composition</p>
+                    <p class="testimonial-text">"The courses are well-structured and easy to follow."</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <img src="https://ui-avatars.com/api/?name=Tiarlu+Samna&background=6051ED&color=fff&size=90&font-size=0.35" alt="Tiarlu Samna" class="testimonial-img">
+                    <h4 class="testimonial-name">Tiarlu Samna</h4>
+                    <p class="testimonial-title">Trainee at Rand Comprehensive</p>
+                    <p class="testimonial-text">"Highly recommend for anyone looking to upskill!"</p>
+                </div>
+            </div>
         </div>
 
-        <div class="col-lg-6 text-center mt-4 mt-lg-0">
-          <!-- PLACEHOLDER: download the unDraw SVG and save to assets/img/hero.svg -->
-          <img src="assets/img/hero.svg" alt="Student learning on laptop illustration" class="img-fluid hero-illustration" />
+        <!-- Mobile Carousel -->
+        <div id="testimonialCarousel" class="carousel slide d-md-none" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="testimonial-card">
+                        <img src="https://ui-avatars.com/api/?name=Susly+Fantong&background=6051ED&color=fff&size=90&font-size=0.35" alt="Susly Fantong" class="testimonial-img">
+                        <h4 class="testimonial-name">Susly Fantong</h4>
+                        <p class="testimonial-title">Mumuat</p>
+                        <p class="testimonial-text">"We all learner for your ton eliting cit ak em youl urat sowde."</p>
+                        <p class="testimonial-title mt-2">Rare Censtims</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial-card">
+                        <img src="https://ui-avatars.com/api/?name=Ali+Omly&background=6051ED&color=fff&size=90&font-size=0.35" alt="Ali Omly" class="testimonial-img">
+                        <h4 class="testimonial-name">Ali Omly</h4>
+                        <p class="testimonial-title">Trainee at Business</p>
+                        <p class="testimonial-text">"The courses are well-structured and easy to follow."</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="testimonial-card">
+                        <img src="https://ui-avatars.com/api/?name=Tiarlu+Samna&background=6051ED&color=fff&size=90&font-size=0.35" alt="Tiarlu Samna" class="testimonial-img">
+                        <h4 class="testimonial-name">Tiarlu Samna</h4>
+                        <p class="testimonial-title">Trainee at Comprehensive</p>
+                        <p class="testimonial-text">"Highly recommend for upskilling!"</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"></button>
+            </div>
         </div>
-      </div>
     </div>
-  </header>
+</section>
 
-  <!-- FEATURES -->
-  <section class="py-5">
+<!-- Footer -->
+<footer class="footer">
     <div class="container">
-      <div class="row g-4 text-center">
-        <div class="col-md-4">
-          <div class="card feature-card p-4 h-100 bg-transparent border-0">
-            <div class="fs-1 mb-3">🚀</div>
-            <h5 class="fw-bold">Learn Faster with Projects</h5>
-            <p class="text-muted">Short, hands-on projects that build your portfolio and skills.</p>
-          </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="footer-brand"><span>Skill</span>Sprint</div>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h5 class="footer-heading">Company</h5>
+                <ul class="footer-links">
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#press">Press</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h5 class="footer-heading">About</h5>
+                <ul class="footer-links">
+                    <li><a href="#catalog">Course Catalog</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h5 class="footer-heading">Learn</h5>
+                <ul class="footer-links">
+                    <li><a href="#catalog">Course Catalog</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-12 mb-4">
+                <h5 class="footer-heading">Community</h5>
+                <ul class="footer-links">
+                    <li><a href="#paths">Skill Paths</a></li>
+                    <li><a href="#events">Events</a></li>
+                </ul>
+                <div class="social-icons mt-3">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-          <div class="card feature-card p-4 h-100 bg-transparent border-0">
-            <div class="fs-1 mb-3">👩‍🏫</div>
-            <h5 class="fw-bold">Guided by Experts</h5>
-            <p class="text-muted">Practical lessons, clear explanations, and helpful instructors.</p>
-          </div>
+        <div class="copyright">
+            <p>&copy; 2023 SkillSprint Inc.</p>
         </div>
-        <div class="col-md-4">
-          <div class="card feature-card p-4 h-100 bg-transparent border-0">
-            <div class="fs-1 mb-3">📜</div>
-            <h5 class="fw-bold">Earn Certificates</h5>
-            <p class="text-muted">Complete courses and receive shareable certificates.</p>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</footer>
 
-  <!-- COURSES (dynamically loaded) -->
-  <section id="courses" class="py-5">
-    <div class="container">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold">Featured Courses</h3>
-        <a href="courses.html" class="text-info">View all courses →</a>
-      </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                // Close mobile menu if open
+                const navCollapse = document.getElementById('navbarNav');
+                if (navCollapse.classList.contains('show')) {
+                    bootstrap.Collapse.getInstance(navCollapse).hide();
+                }
+            }
+        });
+    });
 
-      <div id="courses-grid" class="row g-4">
-        <!-- JS will inject course cards here -->
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="py-4 mt-5 border-top border-secondary">
-    <div class="container d-flex justify-content-between align-items-center">
-      <div>
-        <small>© 2025 SkillSprint — by <strong>Ezekiel Ifeoluwa</strong></small>
-      </div>
-      <div class="text-end">
-        <!-- social placeholders -->
-        <a class="text-light me-2" href="#" aria-label="Twitter">Twitter</a>
-        <a class="text-light me-2" href="#" aria-label="LinkedIn">LinkedIn</a>
-        <a class="text-light" href="#" aria-label="YouTube">YouTube</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Courses loader -->
-  <script src="assets/js/courses.js"></script>
+    // Auto-play carousel
+    if (window.innerWidth < 768) {
+        const carousel = new bootstrap.Carousel(document.getElementById('testimonialCarousel'), {
+            interval: 4000,
+            wrap: true,
+            touch: true
+        });
+    }
+</script>
 </body>
 </html>
